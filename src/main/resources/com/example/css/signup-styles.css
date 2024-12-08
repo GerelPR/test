@@ -1,0 +1,60 @@
+/* signup-styles.css */
+.signup-container {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+}
+
+.title-label {
+    -fx-font-family: 'Arial';
+    -fx-text-fill: #333;
+    -fx-alignment: center;
+}
+
+.input-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #666;
+}
+
+.custom-text-field {
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #ddd;
+    -fx-padding: 10px;
+}
+
+.custom-text-field:focused {
+    -fx-border-color: #4A90E2;
+    -fx-background-insets: 0, 1;
+}
+
+.signup-button {
+    -fx-background-color: #4A90E2;
+    -fx-text-fill: white;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+    -fx-font-weight: bold;
+}
+
+.signup-button:hover {
+    -fx-background-color: #357ABD;
+}
+
+.error-label {
+    -fx-text-fill: #FF4136;
+    -fx-font-size: 12px;
+}
+
+.login-link {
+    -fx-text-fill: #4A90E2;
+    -fx-underline: false;
+}
+
+.login-link:hover {
+    -fx-underline: true;
+}
+
+.small-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #666;
+}
