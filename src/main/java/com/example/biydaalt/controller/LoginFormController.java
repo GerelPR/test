@@ -1,5 +1,6 @@
 package com.example.biydaalt.controller;
 
+import java.io.IOException;
 import java.sql.Connection;
 
 import com.example.biydaalt.model.User;
@@ -7,10 +8,16 @@ import com.example.biydaalt.repository.DatabaseConnection;
 import com.example.biydaalt.repository.UserRepository;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
 
 public class LoginFormController {
 
@@ -60,7 +67,23 @@ public class LoginFormController {
     }
 
     private void goToMainScreen() {
-        // Implement screen transition logic
-        System.out.println("Transition to main screen!");
+        try {
+            // Load the LabManagement FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/labManagement.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage (window) and set the new scene
+            Stage stage = (Stage) ((Node) usernameField).getScene().getWindow();
+            stage.setScene(new Scene(root));
+
+            // Optionally, set the stage title (if needed)
+            stage.setTitle("Lab Management");
+
+            // Show the new scene
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            errorMessage.setText("Failed to transition to the main screen.");
+        }
     }
 }
