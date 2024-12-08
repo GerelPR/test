@@ -1,14 +1,12 @@
 package com.example.biydaalt;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-public class MainApplication extends Application {
+@SpringBootApplication
+public class MainApplication {
 
-    @Override
-    public void start(Stage primaryStage) {
-        // JavaFX initialization
-        primaryStage.setTitle("lab system");
-        primaryStage.show();
+    public static void main(String[] args) {
+        SpringApplication.run(MainApplication.class, args);
     }
 }
