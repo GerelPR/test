@@ -1,5 +1,9 @@
 package com.example.biydaalt.model;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
 /**
  * Энэ нь лаборатори менежментийн систем дэх хэрэглэгчийн ангилал юм.
  * Хэрэглэгч нь системд оролцох ажил үүргийнх нь дагуу ажилтан, лабораторийн менежер, дээд ажилтан гэх мэт системд оролцох ялгаатай эрх эдэлдэг.
@@ -8,23 +12,49 @@ public class User {
     private String userId;
     private String name;
     private String email;
+    private String password;
     private String role;
+
+    // Static set to keep track of unique names
+    private static final Set<String> uniqueNames = new HashSet<>();
 
     // ---- Constructors ----
 
     // Default constructor
     public User() {
+        this.userId = generateUniqueUserId();
     }
 
-    // Parameterized constructor
-    public User(String userId, String name, String email, String role) {
-        this.userId = userId;
+    // Constructor for creating a new user
+    public User(String name, String email, String password, String role) {
+        if (!isUniqueName(name)) {
+            throw new IllegalArgumentException("Name must be unique. '" + name + "' is already taken.");
+        }
+        this.userId = generateUniqueUserId();
         this.name = name;
         this.email = email;
+        this.password = password;
         this.role = role;
+
+        // Register the name as used
+        uniqueNames.add(name);
     }
 
     // ---- Methods ----
+
+    /**
+     * Generate a unique user ID using UUID.
+     */
+    private String generateUniqueUserId() {
+        return UUID.randomUUID().toString();
+    }
+
+    /**
+     * Check if the name is unique.
+     */
+    private boolean isUniqueName(String name) {
+        return !uniqueNames.contains(name);
+    }
 
     /**
      * Хэрэглэгчийн нэвтрэх үйлдэл
@@ -44,6 +74,14 @@ public class User {
      * Хэрэглэгчийн профайлыг шинэчлэх үйлдэл
      */
     public void updateProfile(String newName, String newEmail, String newRole) {
+        if (!newName.equals(this.name) && !isUniqueName(newName)) {
+            throw new IllegalArgumentException("Name must be unique. '" + newName + "' is already taken.");
+        }
+
+        // Update unique names set
+        uniqueNames.remove(this.name);
+        uniqueNames.add(newName);
+
         this.name = newName;
         this.email = newEmail;
         this.role = newRole;
@@ -56,15 +94,19 @@ public class User {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
+        if (!isUniqueName(name)) {
+            throw new IllegalArgumentException("Name must be unique. '" + name + "' is already taken.");
+        }
+
+        // Update unique names set
+        uniqueNames.remove(this.name);
+        uniqueNames.add(name);
+
         this.name = name;
     }
 
@@ -74,6 +116,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getRole() {

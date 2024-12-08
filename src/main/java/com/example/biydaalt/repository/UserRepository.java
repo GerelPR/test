@@ -15,19 +15,21 @@ public class UserRepository {
     }
 
     // Add a new user to the database
-    public void createUser(User user) {
-        String sql = "INSERT INTO users (user_id, name, email, role) VALUES (?, ?, ?, ?)";
+    public void createUser(User user) throws SQLException {
+        String sql = "INSERT INTO users (id, name, email, password, role) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, user.getUserId());
             stmt.setString(2, user.getName());
             stmt.setString(3, user.getEmail());
-            stmt.setString(4, user.getRole());
+            stmt.setString(4, user.getPassword());
+            stmt.setString(5, user.getRole());
             stmt.executeUpdate();
-            System.out.println("User created successfully in the database.");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error inserting user into database.");
+            throw e; // Propagate the exception
         }
     }
+    
 
     // Retrieve a user from the database
     public User getUserById(String userId) {

@@ -2,6 +2,7 @@ package com.example.biydaalt.controller;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import com.example.biydaalt.model.User;
 import com.example.biydaalt.repository.DatabaseConnection;
@@ -30,54 +31,54 @@ public class SignUpController {
 
     private UserRepository userRepository;
 
-    // This method is called when the Sign Up button is pressed
+    public SignUpController(){
+        try {
+            // Initialize the UserRepository with a database connection
+            Connection connection = DatabaseConnection.connect();
+            if (connection != null) {
+                this.userRepository = new UserRepository(connection);
+            } else {
+                System.err.println("Database connection returned null.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Unexpected error occurred while initializing the UserRepository.");
+        }
+    }
+
     @FXML
-    private void handleSignUp(ActionEvent event) throws IOException {
+    private void handleSignUp(ActionEvent event) throws IOException, SQLException {
         String name = nameField.getText();
         String email = emailField.getText();
         String password = passwordField.getText();
-
+    
         if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
             errorLabel.setText("All fields are required.");
             return;
         }
-
-        // Assuming you have a method to get a database connection
-        Connection connection = DatabaseConnection.connect();
-
-        if (connection == null) {
-            errorLabel.setText("Database connection error.");
-            return;
+    
+        try {
+            // Create a new user
+            User newUser = new User(name, email, password, "User");
+    
+            // Use the userRepository to save the user
+            userRepository.createUser(newUser);
+            errorLabel.setText("Sign Up successful!");
+    
+            // Redirect to the login page
+            redirectToLogin();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            errorLabel.setText("An error occurred while creating the user.");
         }
-    
-        // Now you can create a new UserRepository and pass the connection
-        UserRepository userRepository = new UserRepository(connection);
-    
-        // Create a new user and store it in the database
-        User newUser = new User(name, email, password, "User");
-        userRepository.createUser(newUser);
-    
-        errorLabel.setText("Sign Up successful!");
-
-        // After successful sign up, redirect to the Login screen
-        redirectToLogin();
     }
     
-    // Method to load the login screen
     @FXML
     private void redirectToLogin() throws IOException {
-        // Load the Login FXML
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LoginForm.fxml"));
         Pane loginPane = loader.load();
-
-        // Get the current stage (window)
         Stage currentStage = (Stage) nameField.getScene().getWindow();
-
-        // Create a new scene with the Login screen
-        Scene loginScene = new Scene(loginPane);
-
-        // Set the new scene to the current stage
-        currentStage.setScene(loginScene);
+        currentStage.setScene(new Scene(loginPane));
         currentStage.show();
     }
 }
