@@ -1,4 +1,4 @@
-package com.example.biydaalt;
+package com.example.biydaalt.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
