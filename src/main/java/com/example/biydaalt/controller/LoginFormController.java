@@ -1,15 +1,16 @@
 package com.example.biydaalt.controller;
 
 import java.sql.Connection;
+
 import com.example.biydaalt.model.User;
 import com.example.biydaalt.repository.DatabaseConnection;
 import com.example.biydaalt.repository.UserRepository;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class LoginFormController {
 
@@ -44,7 +45,7 @@ public class LoginFormController {
         }
 
         UserRepository userRepository = new UserRepository(connection);
-        User user = userRepository.getUserById(username);
+        User user = userRepository.getUserByName(username);
 
         if (user != null && password.equals("password")) { // Update to hashed password checking
             // Successful login

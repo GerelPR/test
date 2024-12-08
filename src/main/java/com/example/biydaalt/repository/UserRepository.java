@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.example.biydaalt.model.User;
 
 public class UserRepository {
@@ -14,34 +16,32 @@ public class UserRepository {
         this.connection = connection;
     }
 
-    // Add a new user to the database
+    // Add a new user to the database with hashed password
     public void createUser(User user) throws SQLException {
-        String sql = "INSERT INTO users (id, name, email, password, role) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (user_id, name, email, password, role) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, user.getUserId());
             stmt.setString(2, user.getName());
             stmt.setString(3, user.getEmail());
-            stmt.setString(4, user.getPassword());
+            // Hash the password before storing
+            String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+            stmt.setString(4, hashedPassword);
             stmt.setString(5, user.getRole());
             stmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("Error inserting user into database.");
-            throw e; // Propagate the exception
         }
     }
     
-
-    // Retrieve a user from the database
-    public User getUserById(String userId) {
-        String sql = "SELECT * FROM users WHERE user_id = ?";
+    // Retrieve a user from the database by name
+    public User getUserByName(String name) {
+        String sql = "SELECT * FROM users WHERE name = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, userId);
+            stmt.setString(1, name);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return new User(
-                        rs.getString("user_id"),
                         rs.getString("name"),
                         rs.getString("email"),
+                        rs.getString("password"),
                         rs.getString("role")
                 );
             }
@@ -50,6 +50,25 @@ public class UserRepository {
         }
         return null;
     }
+
+    // Retrieve a user from the database by userId
+    public User getUserById(String userId) throws SQLException {
+        String sql = "SELECT * FROM users WHERE user_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new User(
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("password"), // this will store the hashed password
+                        rs.getString("role")
+                );
+            }
+        }
+        return null;
+    }   
+
 
     // Update a user's profile in the database
     public void updateUser(User user) {

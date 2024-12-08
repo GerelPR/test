@@ -27,16 +27,18 @@ public class User {
 
     // Constructor for creating a new user
     public User(String name, String email, String password, String role) {
+        // Check if the name is unique
         if (!isUniqueName(name)) {
             throw new IllegalArgumentException("Name must be unique. '" + name + "' is already taken.");
         }
+        // Generate a unique userId
         this.userId = generateUniqueUserId();
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
 
-        // Register the name as used
+        // Register the name as used to ensure no duplication in the future
         uniqueNames.add(name);
     }
 
