@@ -1,0 +1,10 @@
+.login-pane {
+    -fx-padding: 20;
+    -fx-alignment: center;
+    -fx-background-color: #f0f4f8;
+}
+
+.error-label {
+    -fx-text-fill: red;
+    -fx-font-size: 12px;
+}

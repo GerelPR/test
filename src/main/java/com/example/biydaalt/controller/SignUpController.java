@@ -1,5 +1,6 @@
 package com.example.biydaalt.controller;
 
+import java.io.IOException;
 import java.sql.Connection;
 
 import com.example.biydaalt.model.User;
@@ -8,9 +9,13 @@ import com.example.biydaalt.repository.UserRepository;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class SignUpController {
 
@@ -27,7 +32,7 @@ public class SignUpController {
 
     // This method is called when the Sign Up button is pressed
     @FXML
-    private void handleSignUp(ActionEvent event) {
+    private void handleSignUp(ActionEvent event) throws IOException {
         String name = nameField.getText();
         String email = emailField.getText();
         String password = passwordField.getText();
@@ -53,5 +58,26 @@ public class SignUpController {
         userRepository.createUser(newUser);
     
         errorLabel.setText("Sign Up successful!");
+
+        // After successful sign up, redirect to the Login screen
+        redirectToLogin();
+    }
+    
+    // Method to load the login screen
+    @FXML
+    private void redirectToLogin() throws IOException {
+        // Load the Login FXML
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LoginForm.fxml"));
+        Pane loginPane = loader.load();
+
+        // Get the current stage (window)
+        Stage currentStage = (Stage) nameField.getScene().getWindow();
+
+        // Create a new scene with the Login screen
+        Scene loginScene = new Scene(loginPane);
+
+        // Set the new scene to the current stage
+        currentStage.setScene(loginScene);
+        currentStage.show();
     }
 }
