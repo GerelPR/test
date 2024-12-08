@@ -1,0 +1,83 @@
+/* Global Styles */
+.root {
+    -fx-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: #F5F5F5;
+}
+
+/* Sidebar Menu Styles */
+.sidebar-menu {
+    -fx-background-color: #3A3F44;
+    -fx-padding: 20px;
+}
+
+.sidebar-menu .label {
+    -fx-text-fill: #CCCCCC;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.sidebar-menu .button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #CCCCCC;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+}
+
+.sidebar-menu .button:hover {
+    -fx-background-color: #4E5458;
+}
+
+.sidebar-menu .button.active {
+    -fx-background-color: #4E5458;
+    -fx-text-fill: #FFFFFF;
+}
+
+/* Main Content Styles */
+.main-content {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
+}
+
+.main-content .table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.main-content .table-view .column-header-background {
+    -fx-background-color: #F5F5F5;
+}
+
+.main-content .table-view .column-header .label {
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+}
+
+.main-content .table-view .table-row-cell:selected {
+    -fx-background-color: #E6E6E6;
+}
+
+/* User Profile Styles */
+.user-profile {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 0);
+}
+
+.user-profile .label {
+    -fx-text-fill: #333333;
+}
+
+.user-profile .button {
+    -fx-background-color: #3A3F44;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 12px;
+    -fx-padding: 5px 10px;
+    -fx-cursor: hand;
+}
+
+.user-profile .button:hover {
+    -fx-background-color: #4E5458;
+}

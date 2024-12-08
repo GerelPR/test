@@ -1,5 +1,9 @@
 package com.example.biydaalt.model;
 
+/**
+ * Энэ нь лаборатори дахь шинжилгээний үр дүнгийн ангилал юм.
+ * Шинжилгээний үр дүн нь ажил, дээж, эмчилгээний концентраци, шинжилгээний огноо гэсэн мэдээлэлтэй.
+ */
 public class TestResults {
     private String jobId;
     private String sampleId;
@@ -7,27 +11,27 @@ public class TestResults {
     private String testDate;
 
     public void reassignState() {
-        // Implement test results reassignment
+        // Шинжилгээний үр дүнгийн төлвийг дахин томилох функцийг хэрэгжүүлнэ.
     }
 
     public void exportCSV() {
-        // Implement test results export to CSV
+        // Шинжилгээний үр дүнгийн мэдээллийг CSV файлаар экспортлох функцийг хэрэгжүүлнэ.
     }
 
     public boolean validateResults() {
-        // Implement test results validation
+        // Шинжилгээний үр дүнгийг баталгаажуулах функцийг хэрэгжүүлнэ.
         return true;
     }
 
     public void assignToJob(Job job) {
-        // Assign test results to a job
+        // Шинжилгээний үр дүнг ажилд хавсаргах функцийг хэрэгжүүлнэ.
         this.jobId = job.getJobId();
     }
 
     public void assignToSample(Sample sample) {
-        // Assign test results to a sample
+        // Шинжилгээний үр дүнг дээжид хавсаргах функцийг хэрэгжүүлнэ.
         this.sampleId = sample.getSampleId();
     }
 
-    // Getters and setters
+    // Бусад гэрч, тогтоогчид
 }

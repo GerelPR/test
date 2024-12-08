@@ -1,5 +1,9 @@
 package com.example.biydaalt.model;
 
+/**
+ * Энэ нь лаборатори дахь шинжилгээний дээжний ангилал юм.
+ * Дээж нь дугаар, жин, төлөв, багц дугаар, дээж бүртгэх, төлөвийг шинэчлэх, мэдээллийг авах гэсэн шинж чанаруудтай.
+ */
 public class Sample {
     private String sampleId;
     private float weight;
@@ -8,19 +12,19 @@ public class Sample {
     private boolean registerSample;
 
     public void updateStatus() {
-        // Implement sample status update
+        // Дээжний төлвийг шинэчлэх функцийг хэрэгжүүлнэ.
     }
 
     public void getSampleInfo() {
-        // Implement sample information retrieval
+        // Дээжний мэдээллийг авах функцийг хэрэгжүүлнэ.
     }
 
     public void registerSample() {
-        // Implement sample registration
+        // Дээжийг бүртгэх функцийг хэрэгжүүлнэ.
     }
-
-    public String getSampleId(){
+    public String getSampleId() {
         return this.sampleId;
     }
-    // Getters and setters
+
+    // Бусад гэрч, тогтоогчид
 }

@@ -1,5 +1,9 @@
 package com.example.biydaalt.model;
 
+/**
+ * Энэ нь лаборатори менежментийн систем дэх хэрэглэгчийн ангилал юм.
+ * Хэрэглэгч нь системд оролцох ажил үүргийнх нь дагуу ажилтан, лабораторийн менежер, дээд ажилтан гэх мэт системд оролцох ялгаатай эрх эдэлдэг.
+ */
 public class User {
     private String userId;
     private String name;
@@ -7,16 +11,16 @@ public class User {
     private String role;
 
     public void loginId() {
-        // Implement login functionality
+        // Нэвтрэх функцийг хэрэгжүүлнэ.
     }
 
     public void logout() {
-        // Implement logout functionality
+        // Гарах функцийг хэрэгжүүлнэ.
     }
 
     public void updateProfile() {
-        // Implement profile update functionality
+        // Профайлыг шинэчлэх функцийг хэрэгжүүлнэ.
     }
 
-    // Getters and setters
+    // Гэрч, тогтоогчууд
 }

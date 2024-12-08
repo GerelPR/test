@@ -1,5 +1,9 @@
 package com.example.biydaalt.model;
 
+/**
+ * Энэ нь лаборатори дахь ажил, даалгаварын ангилал юм.
+ * Ажил нь төрөл, приоритет, үүсгэсэн огноо, төлөв, сүүлийн өөрчлөлтийн хугацаа гэсэн шинж чанаруудтай.
+ */
 public class Job {
     private String jobId;
     private String type;
@@ -8,24 +12,24 @@ public class Job {
     private String status;
     private int hoursSinceLastChange;
 
+    public String getJobId() {
+        return this.jobId;
+    }
+
     public void searchJob() {
-        // Implement job search functionality
+        // Ажлын хайлтын функцийг хэрэгжүүлнэ.
     }
 
     public void updateJob() {
-        // Implement job update functionality
+        // Ажлыг шинэчлэх функцийг хэрэгжүүлнэ. 
     }
 
     public void getJobStatus() {
-        // Implement job status retrieval
+        // Ажлын төлвийг авах функцийг хэрэгжүүлнэ.
     }
 
     public void createSample() {
-        // Implement sample creation for the job
-    }
-
-    public String getJobId() {
-        return this.jobId;
+        // Ажлын хүрээнд дээж бүртгэх функцийг хэрэгжүүлнэ.
     }
     // Getters and setters
 }
