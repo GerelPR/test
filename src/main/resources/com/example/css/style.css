@@ -23,6 +23,8 @@
     -fx-font-size: 14px;
     -fx-padding: 10px 20px;
     -fx-cursor: hand;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
 }
 
 .sidebar-menu .button:hover {
