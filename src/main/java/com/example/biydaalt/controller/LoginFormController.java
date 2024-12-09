@@ -176,6 +176,7 @@ public class LoginFormController {
                     return false;
                 }
             }
+            
             return false;
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Authentication error", e);
