@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -18,7 +20,12 @@ public class UserRepository {
 
     // Add a new user to the database with hashed password
     public void createUser(User user) throws SQLException {
-        String sql = "INSERT INTO users (user_id, name, email, password, role) VALUES (?, ?, ?, ?, ?)";
+        // Check if the user already exists by email or name
+        if (isUserExists(user.getEmail(), user.getName())) {
+            throw new IllegalArgumentException("A user with this email or name already exists.");
+        }
+
+        String sql = "INSERT INTO users (id, name, email, password, role) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, user.getUserId());
             stmt.setString(2, user.getName());
@@ -33,21 +40,30 @@ public class UserRepository {
     
     // Retrieve a user from the database by name
     public User getUserByName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return null;
+        }
+    
         String sql = "SELECT * FROM users WHERE name = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, name);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return new User(
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    // Safely create User object
+                    return new User(
                         rs.getString("name"),
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getString("role")
-                );
+                    );
+                }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            // Log the error instead of printing stack trace
+            Logger.getLogger(UserRepository.class.getName()).log(Level.SEVERE, "Database error", e);
         }
+        
         return null;
     }
 
@@ -95,5 +111,20 @@ public class UserRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    // Check if a user exists by email or name
+    public boolean isUserExists(String email, String name) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM users WHERE email = ? OR name = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            stmt.setString(2, name);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0; // If count > 0, user exists
+                }
+            }
+        }
+        return false;
     }
 }

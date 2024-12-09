@@ -46,6 +46,20 @@ public class SignUpController {
         }
     }
 
+    private boolean isValidEmail(String email) {
+        // Add more robust email validation
+        return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+    }
+    
+    private boolean isStrongPassword(String password) {
+        // Enforce password complexity
+        return password.length() >= 8 && 
+               password.matches(".*[A-Z].*") && 
+               password.matches(".*[a-z].*") && 
+               password.matches(".*\\d.*") && 
+               password.matches(".*[!@#$%^&*()].*");
+    }
+
     @FXML
     private void handleSignUp(ActionEvent event) throws IOException, SQLException {
         String name = nameField.getText();
@@ -54,6 +68,15 @@ public class SignUpController {
     
         if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
             errorLabel.setText("All fields are required.");
+            return;
+        }
+        if (!isValidEmail(email)) {
+            errorLabel.setText("Invalid email format.");
+            return;
+        }
+        
+        if (!isStrongPassword(password)) {
+            errorLabel.setText("Password must be at least 8 characters long and contain uppercase, lowercase, number, and special character.");
             return;
         }
     
@@ -67,6 +90,8 @@ public class SignUpController {
     
             // Redirect to the login page
             redirectToLogin();
+        } catch (IllegalArgumentException e) {
+            errorLabel.setText(e.getMessage()); // Display user exists error
         } catch (SQLException e) {
             e.printStackTrace();
             errorLabel.setText("An error occurred while creating the user.");

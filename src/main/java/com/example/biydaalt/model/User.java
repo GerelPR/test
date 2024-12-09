@@ -28,6 +28,18 @@ public class User {
     // Constructor for creating a new user
     public User(String name, String email, String password, String role) {
         // Check if the name is unique
+        // Validate inputs
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be empty");
+        }
+        
+        if (email == null || !isValidEmail(email)) {
+            throw new IllegalArgumentException("Invalid email format");
+        }
+        
+        if (password == null || password.length() < 8) {
+            throw new IllegalArgumentException("Password must be at least 8 characters long");
+        }
         if (!isUniqueName(name)) {
             throw new IllegalArgumentException("Name must be unique. '" + name + "' is already taken.");
         }
@@ -88,6 +100,11 @@ public class User {
         this.email = newEmail;
         this.role = newRole;
         System.out.println("Профайл амжилттай шинэчлэгдлээ!");
+    }
+
+    // Helper method to validate email
+    private boolean isValidEmail(String email) {
+        return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
     }
 
     // ---- Getters and Setters ----

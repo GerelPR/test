@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:controller="com.example.biydaalt.controller.LoginFormController"
-          xmlns:fx="http://javafx.com/fxml"
-          alignment="center"
-          hgap="10" vgap="10" styleClass="login-pane">
-    <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-    <TextField fx:id="usernameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+<VBox fx:controller="com.example.biydaalt.controller.LoginFormController"
+      xmlns:fx="http://javafx.com/fxml"
+      alignment="center"
+      spacing="15"
+      styleClass="login-pane"
+      stylesheets="/com/example/css/login-styles.css">
+    <!-- Title -->
+    <Label text="Welcome to Lab Management System" styleClass="login-title"/>
 
-    <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-    <PasswordField fx:id="passwordField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+    <!-- Form Area -->
+    <GridPane alignment="center" hgap="10" vgap="10">
+        <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="usernameField" GridPane.rowIndex="0" GridPane.columnIndex="1" promptText="Enter your username"/>
 
-    <Button text="Login" fx:id="loginButton" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
+        <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <PasswordField fx:id="passwordField" GridPane.rowIndex="1" GridPane.columnIndex="1" promptText="Enter your password"/>
+    </GridPane>
 
-    <Label fx:id="errorMessage" GridPane.rowIndex="3" GridPane.columnIndex="1" styleClass="error-label"/>
-</GridPane>
+    <!-- Buttons Area -->
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Login" fx:id="loginButton" styleClass="login-button"/>
+        <Button text="Sign Up" fx:id="signupButton" styleClass="signup-button"/>
+    </HBox>
+
+    <!-- Error Message -->
+    <Label fx:id="errorMessage" styleClass="error-label"/>
+</VBox>

@@ -26,8 +26,10 @@ public class LabManagementController {
     private HBox userProfile;
 
     public void initialize() {
-        // Apply CSS styles
-        root.getStylesheets().add(getClass().getResource("/com/example/css/style.css").toExternalForm());
+        // Dynamically set size properties
+        root.setPrefSize(1200, 600);
+        sidebarMenu.setPrefWidth(300);
+        mainContent.setPrefHeight(500);
     }
 
     public static void start(String[] args) {
