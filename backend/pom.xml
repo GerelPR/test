@@ -8,20 +8,13 @@
     <artifactId>backend</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <repositories>
-        <repository>
-            <id>central</id>
-            <url>https://repo.maven.apache.org/maven2</url>
-        </repository>
-    </repositories>
-
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <spring-boot.version>3.0.0</spring-boot.version>
     </properties>
 
     <dependencies>
-
         <!-- Servlet API -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -48,47 +41,51 @@
             <artifactId>spring-context</artifactId>
             <version>5.3.29</version>
         </dependency>
-
-        <!-- Spring Beans -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
             <version>5.3.29</version>
         </dependency>
-
-        <!-- Spring AOP -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
             <version>5.3.29</version>
         </dependency>
-
-        <!-- Spring Expression Language -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-expression</artifactId>
             <version>5.3.29</version>
         </dependency>
 
-        <!-- Spring Boot Starter Web (for a web application) -->
+        <!-- Spring Boot Starter Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
-
-        <!-- Spring Boot Starter Test (for testing purposes) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <version>${spring-boot.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
-
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+        <repository>
+            <id>openjfx-releases</id>
+            <url>https://openjfx.io/maven</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
@@ -104,7 +101,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.example.App</mainClass>
+                    <mainClass>com.example.Server</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -117,9 +114,27 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
+                        <configuration>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                        <exclude>META-INF/LICENSE*</exclude>
+                                        <exclude>META-INF/NOTICE*</exclude>
+                                        <exclude>META-INF/spring.tooling</exclude>
+                                        <exclude>META-INF/spring.schemas</exclude>
+                                        <exclude>META-INF/spring.handlers</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -132,17 +147,16 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.0.0</version> <!-- Ensure the version matches your Spring Boot version -->
+                <version>${spring-boot.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.13</version>
                 <configuration>
-                    <mainClass>com.example.App</mainClass>
+                    <mainClass>com.example.Server</mainClass>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>
