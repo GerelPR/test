@@ -2,9 +2,12 @@ package com.example.biydaalt.controller;
 
 import java.io.IOException;
 
+import com.example.biydaalt.model.Job;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -12,16 +15,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class LabManagementController {
-
     @FXML
     private BorderPane root;
-
     @FXML
     private VBox sidebarMenu;
-
     @FXML
     private StackPane mainContent;
-
     @FXML
     private HBox userProfile;
 
@@ -30,6 +29,10 @@ public class LabManagementController {
         root.setPrefSize(1200, 600);
         sidebarMenu.setPrefWidth(300);
         mainContent.setPrefHeight(500);
+        // Create and set up the TableView or other UI components
+        TableView<Job> tableView = new TableView<>();
+        // Add columns and data to the TableView
+        mainContent.getChildren().add(tableView);
     }
 
     public static void start(String[] args) {
