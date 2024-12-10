@@ -1,18 +1,27 @@
 package com.example.biydaalt.controller;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.biydaalt.model.Job;
 import com.example.biydaalt.model.Sample;
 import com.example.biydaalt.repository.DatabaseConnection;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.sql.ResultSet;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+
 
 public class AddJobController {
 
@@ -37,6 +46,8 @@ public class AddJobController {
     private Connection connection;
 
     private List<Sample> samples = new ArrayList<>();
+
+    private String currentUser;
 
     @FXML
     private void initialize() {
@@ -103,12 +114,14 @@ public class AddJobController {
             }
 
             if (!isJobIdUnique(jobId)) {
-                showError("Job ID already exists. Please use a unique Job ID.");
+                showError("Job ID already exists. Please use a unique Job");
                 return;
             }
 
+            String currentDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
             // Create a Job object
-            Job job = new Job(jobId, jobName, urgency, jobType, "currentUser", "2024-12-10");
+            Job job = new Job(jobId, jobName, urgency, jobType, this.currentUser, currentDateTime);
 
             // Save job and samples to the database
             saveJobToDatabase(job);
@@ -120,11 +133,15 @@ public class AddJobController {
             // Clear form
             clearForm();
         } catch (SQLException e) {
-            if (e.getMessage().contains("Duplicate entry")) {
+            // Check specific error message for better insight
+            String errorMessage = e.getMessage();
+            if (errorMessage.contains("Duplicate entry")) {
                 showError("Job ID already exists. Please use a unique Job ID.");
             } else {
-                showError("An error occurred while submitting the job.");
+                // Log the full stack trace for more details
+                System.err.println("SQLException occurred: " + errorMessage);
                 e.printStackTrace();
+                showError("An error occurred while submitting the job. Please check the console for details.");
             }
         }
     }
@@ -174,5 +191,9 @@ public class AddJobController {
         sampleTextArea.clear();
         sampleListView.getItems().clear();
         samples.clear();
+    }
+
+    public void setCurrentUser(String username) {
+        this.currentUser = username;
     }
 }

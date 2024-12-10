@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <VBox spacing="10" xmlns:fx="http://javafx.com/fxml">
     <Label text="Welcome to the Dashboard!" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
-    <!-- Additional dashboard content -->
+    <TableView fx:id="jobTableView" prefHeight="400" prefWidth="800">
+        <columns>
+            <TableColumn fx:id="jobIdColumn" text="Job ID" />
+            <TableColumn fx:id="jobNameColumn" text="Job Name" />
+            <TableColumn fx:id="urgencyColumn" text="Urgency" />
+            <TableColumn fx:id="jobTypeColumn" text="Job Type" />
+            <TableColumn fx:id="createdByColumn" text="Created By" />
+            <TableColumn fx:id="createdAtColumn" text="Created At" />
+            <TableColumn fx:id="statusColumn" text="Status" />
+        </columns>
+    </TableView>    
 </VBox>

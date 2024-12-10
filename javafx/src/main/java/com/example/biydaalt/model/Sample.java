@@ -14,6 +14,15 @@ public class Sample {
         this.result = null; // Result not set initially
     }
     
+    // Constructor that accepts sampleId, weight, and result
+    public Sample(String sampleId, Double weight, String result) {
+        if (sampleId == null || sampleId.trim().isEmpty()) {
+            throw new IllegalArgumentException("Sample ID cannot be empty.");
+        }
+        this.sampleId = sampleId;
+        this.weight = weight;
+        this.result = result;
+    }
 
     // Getters and Setters
     public String getSampleId() {

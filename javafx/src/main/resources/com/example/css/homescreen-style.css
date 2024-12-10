@@ -1,0 +1,38 @@
+/* General styles */
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* Navigation buttons */
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 16px;
+    -fx-cursor: hand;
+    -fx-graphic-text-gap: 10px; 
+}
+.nav-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-transition: background-color 0.5s ease; 
+}
+
+.nav-button:focused {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+}
+
+.button-center{
+    -fx-background-color: #5A57F4; 
+    -fx-padding: 20;
+    -fx-border-radius: 20px;
+}
+
+/* Content area */
+#contentArea {
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
+}
+
+#btnLogout {
+    -fx-text-fill: red;
+}
