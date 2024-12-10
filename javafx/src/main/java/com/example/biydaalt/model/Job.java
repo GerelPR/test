@@ -21,8 +21,8 @@ public class Job {
         if (jobName == null || jobName.trim().isEmpty()) {
             throw new IllegalArgumentException("Job name cannot be empty.");
         }
-        if (urgency == null || (!urgency.equalsIgnoreCase("яаралтай") && !urgency.equalsIgnoreCase("энгийн"))) {
-            throw new IllegalArgumentException("Urgency must be 'яаралтай' or 'энгийн'.");
+        if (!urgency.equals("urgent") && !urgency.equals("normal")) {
+            throw new IllegalArgumentException("Urgency must be 'urgent' or 'normal'.");
         }
         if (jobType == null || jobType.trim().isEmpty()) {
             throw new IllegalArgumentException("Job type cannot be empty.");
