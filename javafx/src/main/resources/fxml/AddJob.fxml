@@ -3,7 +3,46 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="10" xmlns:fx="http://javafx.com/fxml">
-    <Label text="Welcome to the AddJob!" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
-    <!-- Additional dashboard content -->
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.biydaalt.controller.AddJobController">
+    
+    <!-- Job Details Section -->
+    <Label text="Add New Job" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+    
+    <HBox spacing="10">
+        <VBox spacing="5">
+            <Label text="Job ID" />
+            <TextField fx:id="jobIdField" promptText="Enter Job ID" />
+        </VBox>
+        <VBox spacing="5">
+            <Label text="Job Name" />
+            <TextField fx:id="jobNameField" promptText="Enter Job Name" />
+        </VBox>
+    </HBox>
+
+    <HBox spacing="10">
+        <VBox spacing="5">
+            <Label text="Urgency" />
+            <ComboBox fx:id="urgencyComboBox" promptText="Select urgency" />
+
+        </VBox>
+        <VBox spacing="5">
+            <Label text="Job Type" />
+            <TextField fx:id="jobTypeField" promptText="Enter Job Type" />
+        </VBox>
+    </HBox>
+
+    <!-- Sample Section -->
+    <VBox spacing="5">
+        <Label text="Sample IDs (one per line)" />
+        <TextArea fx:id="sampleTextArea" promptText="Paste sample IDs here..." prefRowCount="5" />
+        <Button text="Preview Samples" onAction="#previewSamples" />
+    </VBox>
+
+    <!-- Sample Preview -->
+    <Label text="Parsed Sample IDs" />
+    <ListView fx:id="sampleListView" prefHeight="100" />
+
+    <!-- Submit Button -->
+    <Button text="Submit Job" onAction="#submitJob" style="-fx-background-color: #5A57F4; -fx-text-fill: white;" />
+
 </VBox>

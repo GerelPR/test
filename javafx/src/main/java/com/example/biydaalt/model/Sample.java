@@ -1,30 +1,57 @@
 package com.example.biydaalt.model;
 
-/**
- * Энэ нь лаборатори дахь шинжилгээний дээжний ангилал юм.
- * Дээж нь дугаар, жин, төлөв, багц дугаар, дээж бүртгэх, төлөвийг шинэчлэх, мэдээллийг авах гэсэн шинж чанаруудтай.
- */
 public class Sample {
-    private String sampleId;
-    private float weight;
-    private String status;
-    private String batchCode;
-    private boolean registerSample;
+    private String sampleId; // Unique sample ID
+    private Double weight; // Weight of the sample (nullable, updated later)
+    private String result; // Result of the sample analysis (nullable, updated later)
 
-    public void updateStatus() {
-        // Дээжний төлвийг шинэчлэх функцийг хэрэгжүүлнэ.
+    public Sample(String sampleId) {
+        if (sampleId == null || sampleId.trim().isEmpty()) {
+            throw new IllegalArgumentException("Sample ID cannot be empty.");
+        }
+        this.sampleId = sampleId;
+        this.weight = null; // Weight not set initially
+        this.result = null; // Result not set initially
     }
+    
 
-    public void getSampleInfo() {
-        // Дээжний мэдээллийг авах функцийг хэрэгжүүлнэ.
-    }
-
-    public void registerSample() {
-        // Дээжийг бүртгэх функцийг хэрэгжүүлнэ.
-    }
+    // Getters and Setters
     public String getSampleId() {
-        return this.sampleId;
+        return sampleId;
     }
 
-    // Бусад гэрч, тогтоогчид
+    public void setSampleId(String sampleId) {
+        if (sampleId == null || sampleId.trim().isEmpty()) {
+            throw new IllegalArgumentException("Sample ID cannot be empty.");
+        }
+        this.sampleId = sampleId;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        if (weight != null && weight <= 0) {
+            throw new IllegalArgumentException("Weight must be greater than 0.");
+        }
+        this.weight = weight;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    @Override
+    public String toString() {
+        return "Sample{" +
+                "sampleId='" + sampleId + '\'' +
+                ", weight=" + (weight != null ? weight : "Not Set") +
+                ", result='" + (result != null ? result : "Not Set") + '\'' +
+                '}';
+    }
 }
