@@ -137,16 +137,17 @@ public class LoginFormController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/signup.fxml"));
             Parent root = loader.load();
     
-            Stage stage = (Stage) usernameField.getScene().getWindow(); // Get the current stage
-            stage.setScene(new Scene(root));
-            stage.setTitle("Sign Up");
-            stage.centerOnScreen();
-            stage.show();
+            // Get the current stage
+            Stage stage = (Stage) usernameField.getScene().getWindow();
+    
+            // Update the root of the current scene
+            stage.getScene().setRoot(root);
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to load sign-up screen", e);
             errorMessage.setText("Failed to transition to the sign-up screen.");
         }
     }
+    
     
 
     private boolean isValidInput(String input) {
@@ -220,7 +221,7 @@ public class LoginFormController {
 
     private void goToMainScreen() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/labManagement.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/HomeScreen.fxml"));
             Parent root = loader.load();
             
             Stage stage = (Stage) ((Node) usernameField).getScene().getWindow();

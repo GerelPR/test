@@ -25,7 +25,7 @@ public class UserRepository {
             throw new IllegalArgumentException("A user with this email or name already exists.");
         }
 
-        String sql = "INSERT INTO users (id, name, email, password, role) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (user_id, name, email, password, role) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, user.getUserId());
             stmt.setString(2, user.getName());
@@ -37,24 +37,25 @@ public class UserRepository {
             stmt.executeUpdate();
         }
     }
-    
+
     // Retrieve a user from the database by name
     public User getUserByName(String name) {
         if (name == null || name.trim().isEmpty()) {
             return null;
         }
-    
+
         String sql = "SELECT * FROM users WHERE name = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, name);
-            
+
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    // Safely create User object
+                    // Create User object using all fields from the database
                     return new User(
+                        rs.getString("user_id"),
                         rs.getString("name"),
                         rs.getString("email"),
-                        rs.getString("password"),
+                        rs.getString("password"), // Store hashed password
                         rs.getString("role")
                     );
                 }
@@ -63,7 +64,7 @@ public class UserRepository {
             // Log the error instead of printing stack trace
             Logger.getLogger(UserRepository.class.getName()).log(Level.SEVERE, "Database error", e);
         }
-        
+
         return null;
     }
 
@@ -75,16 +76,16 @@ public class UserRepository {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return new User(
-                        rs.getString("name"),
-                        rs.getString("email"),
-                        rs.getString("password"), // this will store the hashed password
-                        rs.getString("role")
+                    rs.getString("user_id"),
+                    rs.getString("name"),
+                    rs.getString("email"),
+                    rs.getString("password"), // Store hashed password
+                    rs.getString("role")
                 );
             }
         }
         return null;
-    }   
-
+    }
 
     // Update a user's profile in the database
     public void updateUser(User user) {

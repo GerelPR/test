@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.biydaalt.controller.HomeScreenController" prefWidth="1200" prefHeight="800">
+    
+    <!-- Left Sidebar -->
+    <left>
+        <VBox spacing="20" alignment="TOP_LEFT" style="-fx-background-color: #5A57F4; -fx-padding: 20;">
+            <Label text="Lab" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;" />
+            
+            <!-- Navigation Buttons -->
+            <VBox fx:id="navBar" spacing="10">
+                <Button text="Dashboard" fx:id="btnDashboard" onAction="#showDashboard" styleClass="nav-button" />
+                <Button text="Add Job" fx:id="btnAddJob" onAction="#showAddJob" styleClass="nav-button" />
+                <Button text="Print Barcode" fx:id="btnPrintBarcode" onAction="#showPrintBarcode" styleClass="nav-button" />
+                <Button text="Input Result" fx:id="btnInputResult" onAction="#showInputResult" styleClass="nav-button" />
+                <Button text="See Result" fx:id="btnSeeResult" onAction="#showSeeResult" styleClass="nav-button" />
+                <Button text="Weight Job" fx:id="btnWeightJob" onAction="#showWeightJob" styleClass="nav-button" />
+                <Button text="Import Job" fx:id="btnImportJob" onAction="#showImportJob" styleClass="nav-button" />
+                <Button text="Search Job" fx:id="btnSearchJob" onAction="#showSearchJob" styleClass="nav-button" />
+                <Button text="Settings" fx:id="btnSettings" onAction="#showSettings" styleClass="nav-button" />
+                <Button text="Log Out" fx:id="btnLogout" onAction="#logout" style="-fx-text-fill: red; -fx-background-color: transparent;" />
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <StackPane fx:id="contentArea" style="-fx-padding: 20;">
+            <!-- Default content is the dashboard -->
+        </StackPane>
+    </center>
+</BorderPane>
