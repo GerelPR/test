@@ -109,18 +109,13 @@ public class LoginFormController {
             boolean loginSuccessful = authenticateUser(username, password);
 
             if (loginSuccessful) {
-                // Reset failed attempts on successful login
-                failedAttempts = 0;
-                lockoutEndTime = null;
-                
-                // Log successful login
-                LOGGER.info("Successful login for user: " + username);
-                
-                // Clear sensitive data
-                passwordField.clear();
-                
-                // Transition to main screen
-                Platform.runLater(this::goToMainScreen);
+                // Fetch the current user's data from the database
+                User currentUser = userRepository.getUserByName(username);
+                if (currentUser != null) {
+                    String email = currentUser.getEmail();
+                    String role = currentUser.getRole();
+                    goToMainScreen(username, email, role);
+                }
             } else {
                 // Handle failed login attempt
                 handleFailedLogin();
@@ -219,18 +214,31 @@ public class LoginFormController {
         errorMessage.setStyle("-fx-text-fill: red;");
     }
 
-    private void goToMainScreen() {
+    private void goToMainScreen(String username, String email, String role) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/HomeScreen.fxml"));
             Parent root = loader.load();
-            
-            Stage stage = (Stage) ((Node) usernameField).getScene().getWindow();
-            stage.setScene(new Scene(root));
+    
+            // Get the controller of HomeScreen
+            HomeScreenController homeScreenController = loader.getController();
+    
+            // Pass the current user's data to HomeScreenController
+            homeScreenController.setUserData(username, email, role);
+    
+            // Get the current stage
+            Stage stage = (Stage) usernameField.getScene().getWindow();
+    
+            // Update the root of the current scene
+            stage.getScene().setRoot(root);
+    
+            // Ensure the stage remains maximized
+            stage.setMaximized(true);
+    
+            // Update the title of the stage
             stage.setTitle("Lab Management");
-            stage.show();
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to load main screen", e);
             showError("Failed to load main screen");
         }
-    }
+    }       
 }

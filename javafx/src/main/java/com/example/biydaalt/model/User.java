@@ -14,7 +14,6 @@ public class User {
     public User() {
         this.userId = generateUniqueUserId();
     }
-
     // Constructor for creating a user with all fields, including userId
     public User(String userId, String name, String email, String password, String role) {
         if (name == null || name.trim().isEmpty()) {
@@ -30,7 +29,7 @@ public class User {
             throw new IllegalArgumentException("Invalid role. Must be 'User' or 'Admin'.");
         }
 
-        this.userId = userId;  // Set the userId directly
+        this.userId = userId;
         this.name = name;
         this.email = email;
         this.password = password;
@@ -77,7 +76,7 @@ public class User {
     public String getEmail() { return email; }
     public String getPassword() { return password; }
     public String getRole() { return role; }
-
+    
     @Override
     public String toString() {
         return "User{" +

@@ -5,6 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+
 
 import java.io.IOException;
 
@@ -33,10 +36,33 @@ public class HomeScreenController {
     private Button btnSettings;
 
     @FXML
-    public void initialize() {
-        // Set Dashboard as default
+    private Label usernameLabel;
+
+    @FXML
+    private Label userEmailLabel;
+
+    @FXML
+    private Label userRoleLabel;
+
+
+    @FXML
+    private void initialize() {
+        // Set default content (Dashboard) on load
         loadContent("Dashboard");
         setActiveButton(btnDashboard);
+    }
+
+    /**
+     * Set the user data to display on the Home Screen.
+     * 
+     * @param username The username of the current user.
+     * @param email The email of the current user.
+     * @param role The role of the current user.
+     */
+    public void setUserData(String username, String email, String role) {
+        usernameLabel.setText(username);
+        userEmailLabel.setText(email);
+        userRoleLabel.setText(role);
     }
 
     @FXML
@@ -95,8 +121,43 @@ public class HomeScreenController {
 
     @FXML
     private void logout() {
-        // Handle logout logic
+        try {
+            // Load the login screen FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LoginForm.fxml"));
+            Parent loginRoot = loader.load();
+    
+            // Get the current stage
+            Stage currentStage = (Stage) contentArea.getScene().getWindow();
+    
+            // Check if the current stage is maximized
+            boolean isMaximized = currentStage.isMaximized();
+    
+            // Get current stage dimensions
+            double currentWidth = currentStage.getWidth();
+            double currentHeight = currentStage.getHeight();
+    
+            // Set the login screen as the root of the current stage
+            currentStage.getScene().setRoot(loginRoot);
+    
+            // Apply the current size to the new scene
+            if (!isMaximized) {
+                currentStage.setWidth(currentWidth);
+                currentStage.setHeight(currentHeight);
+            }
+    
+            // Keep the maximized state if applicable
+            currentStage.setMaximized(isMaximized);
+    
+            // Optionally set the stage title back to "Login"
+            currentStage.setTitle("Login");
+    
+            System.out.println("User logged out successfully!");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load login screen.");
+        }
     }
+       
 
     private void loadContent(String fxmlName) {
         try {
