@@ -1,0 +1,65 @@
+/* General VBox styling */
+.vbox {
+    padding: 20px;
+    background-color: #f5f5f5;
+    spacing: 15px;
+}
+
+/* Header Label styling */
+.label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 10 0 15 0;
+}
+
+/* TextField styling */
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 5px;
+    -fx-padding: 5;
+}
+
+/* ComboBox styling */
+.combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 5px;
+    -fx-padding: 5;
+}
+
+/* TextArea styling */
+.text-area {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 5px;
+    -fx-padding: 5;
+    -fx-font-family: Arial, sans-serif;
+}
+
+/* Button styling */
+.button {
+    -fx-background-color: #5A57F4;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-padding: 8 15;
+}
+
+.button:hover {
+    -fx-background-color: #4e4bc3;
+}
+
+.button:pressed {
+    -fx-background-color: #3f3c97;
+}
+
+/* ListView styling */
+.list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 5px;
+    -fx-padding: 5;
+}

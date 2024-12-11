@@ -3,49 +3,57 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.biydaalt.controller.HomeScreenController" prefWidth="1200" prefHeight="800" stylesheets="/com/example/css/homescreen-style.css">
+<BorderPane xmlns:fx="http://javafx.com/fxml" 
+            fx:controller="com.example.biydaalt.controller.HomeScreenController" 
+            prefWidth="1200" prefHeight="800" stylesheets="/com/example/css/homescreen-style.css">
 
     <!-- Top Bar -->
     <top>
-        <HBox spacing="10" alignment="CENTER_RIGHT" style="-fx-background-color: #f0f0f0; -fx-padding: 10;">
+        <HBox spacing="10" alignment="CENTER_RIGHT" styleClass="topbar">
             <Region HBox.hgrow="ALWAYS" /> <!-- Push items to the right -->
-            <VBox spacing="5" alignment="CENTER_RIGHT">
-                <Label fx:id="usernameLabel" text="Username" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
-                <Label fx:id="userEmailLabel" text="user@example.com" style="-fx-font-size: 12px; -fx-text-fill: gray;" />
-                <Label fx:id="userRoleLabel" text="ROle" style="-fx-font-size: 12px; -fx-text-fill: gray;" />
-            </VBox>
+
+            <!-- User Profile Section -->
+            <HBox spacing="10" alignment="CENTER">
+                <ImageView fx:id="profileImageView" fitWidth="40" fitHeight="40" 
+                           styleClass="profile-image" />
+                <VBox spacing="5" alignment="CENTER_RIGHT">
+                    <Label fx:id="usernameLabel" text="Username" styleClass="topbar-username" />
+                    <Label fx:id="userEmailLabel" text="user@example.com" styleClass="topbar-details" />
+                    <Label fx:id="userRoleLabel" text="Role" styleClass="topbar-details" />
+                </VBox>
+            </HBox>
         </HBox>
     </top>
 
-    <!-- Left Sidebar -->
-    <left>
-        <VBox spacing="10" alignment="TOP_LEFT"
-              styleClass="button-center"
-              prefWidth="200">
-            <Label text="Lab" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;" />
-            
-            <!-- Navigation Buttons -->
-            <VBox spacing="10">
-                <Button text=" Dashboard" fx:id="btnDashboard" onAction="#showDashboard" styleClass="nav-button" id="btnDashboard"/>
-                <Button text=" Add Job" fx:id="btnAddJob" onAction="#showAddJob" styleClass="nav-button" id="btnAddJob"/>
-                <Button text=" Print Barcode" fx:id="btnPrintBarcode" onAction="#showPrintBarcode" styleClass="nav-button" id="btnPrintBarcode"/>
-                <Button text=" Input Result" fx:id="btnInputResult" onAction="#showInputResult" styleClass="nav-button" id="btnInputResult"/>
-                <Button text=" See Result" fx:id="btnSeeResult" onAction="#showSeeResult" styleClass="nav-button" id="btnSeeResult"/>
-                <Button text=" Weight Job" fx:id="btnWeightJob" onAction="#showWeightJob" styleClass="nav-button" id="btnWeightJob"/>
-                <Button text=" Import Job" fx:id="btnImportJob" onAction="#showImportJob" styleClass="nav-button" id="btnImportJob"/>
-                <Button text=" Search Job" fx:id="btnSearchJob" onAction="#showSearchJob" styleClass="nav-button" id="btnSearchJob"/>
-                <Button text=" Settings" fx:id="btnSettings" onAction="#showSettings" styleClass="nav-button" id="btnSettings"/>
-                <Button text=" Log Out" fx:id="btnLogout" onAction="#logout" styleClass="nav-button" id="btnLogout"/>
-            </VBox>
-        </VBox>
-    </left>
-
-    <!-- Content Area -->
+    <!-- Main Content -->
     <center>
-        <StackPane fx:id="contentArea" style="-fx-padding: 20;" id="contentArea">
-            <!-- Default content will be loaded here -->
-        </StackPane>
+        <HBox spacing="0">
+            <!-- Sidebar -->
+            <VBox spacing="10" alignment="TOP_LEFT"
+                  styleClass="sidebar"
+                  prefWidth="200">
+                <Label text="Lab" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;" />
+
+                <!-- Navigation Buttons -->
+                <VBox spacing="10">
+                    <Button text=" Dashboard" fx:id="btnDashboard" onAction="#showDashboard" styleClass="nav-button" id="btnDashboard"/>
+                    <Button text=" Add Job" fx:id="btnAddJob" onAction="#showAddJob" styleClass="nav-button" id="btnAddJob"/>
+                    <Button text=" Print Barcode" fx:id="btnPrintBarcode" onAction="#showPrintBarcode" styleClass="nav-button" id="btnPrintBarcode"/>
+                    <Button text=" Input Result" fx:id="btnInputResult" onAction="#showInputResult" styleClass="nav-button" id="btnInputResult"/>
+                    <Button text=" See Result" fx:id="btnSeeResult" onAction="#showSeeResult" styleClass="nav-button" id="btnSeeResult"/>
+                    <Button text=" Weight Job" fx:id="btnWeightJob" onAction="#showWeightJob" styleClass="nav-button" id="btnWeightJob"/>
+                    <Button text=" Import Job" fx:id="btnImportJob" onAction="#showImportJob" styleClass="nav-button" id="btnImportJob"/>
+                    <Button text=" Search Job" fx:id="btnSearchJob" onAction="#showSearchJob" styleClass="nav-button" id="btnSearchJob"/>
+                    <Button text=" Settings" fx:id="btnSettings" onAction="#showSettings" styleClass="nav-button" id="btnSettings"/>
+                    <Button text=" Log Out" fx:id="btnLogout" onAction="#logout" styleClass="nav-button" id="btnLogout"/>
+                </VBox>
+            </VBox>
+
+            <!-- Content Area -->
+            <StackPane fx:id="contentArea" style="-fx-padding: 20;" id="contentArea" HBox.hgrow="ALWAYS">
+                <!-- Default content will be loaded here -->
+            </StackPane>
+        </HBox>
     </center>
 </BorderPane>

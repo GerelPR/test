@@ -6,9 +6,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="10" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.biydaalt.controller.DashboardController">
+<VBox spacing="10" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.biydaalt.controller.DashboardController" stylesheets="/com/example/css/dashboard-style.css">
     <Label text="Welcome to the Dashboard!" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
-    <TableView fx:id="jobTableView" prefHeight="400" prefWidth="800">
+    <TableView fx:id="jobTableView" prefHeight="400" prefWidth="600">
         <columns>
             <TableColumn text="Job ID" fx:id="jobIdColumn" />
             <TableColumn text="Job Name" fx:id="jobNameColumn" />

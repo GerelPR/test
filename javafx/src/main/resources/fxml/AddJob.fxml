@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.biydaalt.controller.AddJobController">
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.biydaalt.controller.AddJobController" stylesheets="/com/example/css/addjob-style.css">
     
     <!-- Job Details Section -->
     <Label text="Add New Job" style="-fx-font-size: 18px; -fx-font-weight: bold;" />

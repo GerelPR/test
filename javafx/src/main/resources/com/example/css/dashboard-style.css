@@ -1,0 +1,54 @@
+/* General VBox styling */
+.vbox {
+    padding: 20px;
+    background-color: #f5f5f5;
+    spacing: 20px;
+}
+
+/* Label styling */
+.label {
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 0 20 0;
+}
+
+/* TableView styling */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #2c3e50;
+    -fx-border-radius: 5px;
+    -fx-padding: 10;
+    -fx-font-family: Arial, sans-serif;
+}
+
+/* TableColumn header styling */
+.table-view .column-header {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+/* TableCell styling */
+.table-view .cell {
+    -fx-alignment: center;
+    -fx-font-size: 13px;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: #e0e0e0;
+    -fx-padding: 5;
+}
+
+/* Alternating row colors */
+.table-view .row-cell:nth-child(even) {
+    -fx-background-color: #ecf0f1;
+}
+
+.table-view .row-cell:nth-child(odd) {
+    -fx-background-color: white;
+}
+
+/* Hover effect for rows */
+.table-view .row-cell:hover {
+    -fx-background-color: #dcdde1;
+}
