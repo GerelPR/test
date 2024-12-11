@@ -41,13 +41,13 @@ public class DashboardController {
 
     public void initialize() {
         // Bind table columns to Job properties
-        jobIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        jobNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        jobIdColumn.setCellValueFactory(new PropertyValueFactory<>("jobId"));
+        jobNameColumn.setCellValueFactory(new PropertyValueFactory<>("jobName"));
         urgencyColumn.setCellValueFactory(new PropertyValueFactory<>("urgency"));
         jobTypeColumn.setCellValueFactory(new PropertyValueFactory<>("jobType"));
         createdByColumn.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
         createdAtColumn.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));        
 
         // Load jobs into the TableView
         loadJobs();
