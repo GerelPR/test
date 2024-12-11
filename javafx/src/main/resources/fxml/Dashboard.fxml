@@ -6,17 +6,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="10" xmlns:fx="http://javafx.com/fxml">
+<VBox spacing="10" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.biydaalt.controller.DashboardController">
     <Label text="Welcome to the Dashboard!" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
     <TableView fx:id="jobTableView" prefHeight="400" prefWidth="800">
         <columns>
-            <TableColumn fx:id="jobIdColumn" text="Job ID" />
-            <TableColumn fx:id="jobNameColumn" text="Job Name" />
-            <TableColumn fx:id="urgencyColumn" text="Urgency" />
-            <TableColumn fx:id="jobTypeColumn" text="Job Type" />
-            <TableColumn fx:id="createdByColumn" text="Created By" />
-            <TableColumn fx:id="createdAtColumn" text="Created At" />
-            <TableColumn fx:id="statusColumn" text="Status" />
-        </columns>
+            <TableColumn text="Job ID" fx:id="jobIdColumn" />
+            <TableColumn text="Job Name" fx:id="jobNameColumn" />
+            <TableColumn text="Urgency" fx:id="urgencyColumn" />
+            <TableColumn text="Job Type" fx:id="jobTypeColumn" />
+            <TableColumn text="Created By" fx:id="createdByColumn" />
+            <TableColumn text="Created At" fx:id="createdAtColumn" />
+            <TableColumn text="Status" fx:id="statusColumn" />
+        </columns>  
     </TableView>    
 </VBox>
