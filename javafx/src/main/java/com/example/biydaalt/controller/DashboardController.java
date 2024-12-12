@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.biydaalt.model.Job;
+import com.example.biydaalt.model.Sample;
 import com.example.biydaalt.repository.DatabaseConnection;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -39,6 +41,16 @@ public class DashboardController {
     @FXML
     private TableColumn<Job, String> statusColumn;
 
+    @FXML
+    private TableView<Sample> sampleTableView;
+
+    @FXML
+    private TableColumn<Sample, String> sampleIdColumn;
+    @FXML
+    private TableColumn<Sample, String> sampleNameColumn;
+    @FXML
+    private TableColumn<Sample, String> sampleDescriptionColumn;
+
     public void initialize() {
         // Bind table columns to Job properties
         jobIdColumn.setCellValueFactory(new PropertyValueFactory<>("jobId"));
@@ -47,10 +59,68 @@ public class DashboardController {
         jobTypeColumn.setCellValueFactory(new PropertyValueFactory<>("jobType"));
         createdByColumn.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
         createdAtColumn.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));        
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));   
+        
+        sampleTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE); 
+        sampleIdColumn.setCellValueFactory(new PropertyValueFactory<>("sampleId"));
+        sampleNameColumn.setCellValueFactory(new PropertyValueFactory<>("sampleName"));
+        sampleDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("sampleDescription"));
 
-        // Load jobs into the TableView
         loadJobs();
+        jobTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                loadSamplesForJob(newValue.getJobId()); 
+            } else {
+                sampleTableView.getItems().clear(); // Clear samples when no job is selected
+            }
+        });
+    }
+
+    private void loadSamplesForJob(String jobId) {
+        try {
+            List<Sample> samples = fetchSamplesForJob(jobId);
+
+            // Clear existing items and add new samples
+            sampleTableView.getItems().clear();
+            ObservableList<Sample> observableSamples = FXCollections.observableArrayList(samples);
+            sampleTableView.setItems(observableSamples);
+        } catch (SQLException e) {
+            System.err.println("Error loading samples: " + e.getMessage());
+        }
+    }
+
+    private List<Sample> fetchSamplesForJob(String jobId) throws SQLException {
+        List<Sample> samples = new ArrayList<>();
+
+        String sampleQuery = "SELECT * FROM samples WHERE job_id = '" + jobId + "'"; 
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sampleQuery)) {
+
+            while (rs.next()) {
+                String sampleId = rs.getString("sample_id");
+                String weightString = rs.getString("weight");
+                Double weight;
+                if (weightString != null && !weightString.isEmpty()) { // Check for null AND empty string
+                    try {
+                        weight = Double.valueOf(weightString);
+                    } catch (NumberFormatException e) {
+                        System.err.println("Invalid weight format: " + weightString);
+                        // Handle the error appropriately (e.g., set a default value, log, throw an exception)
+                        weight = 0.0; // Example: set to 0 if parsing fails
+                    }
+                } else {
+                    System.err.println("Weight is null or empty in the database.");
+                    // Handle the null case (e.g., set a default value)
+                    weight = 0.0; // Example: set to 0 if null
+                }
+                String result = rs.getString("result");
+
+                Sample sample = new Sample(sampleId, weight, result); 
+                samples.add(sample);
+            }
+        }
+
+        return samples;
     }
 
     private void loadJobs() {

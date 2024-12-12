@@ -20,6 +20,7 @@
     -fx-border-radius: 5px;
     -fx-padding: 10;
     -fx-font-family: Arial, sans-serif;
+    -fx-border-radius: 30px;
 }
 
 /* TableColumn header styling */
@@ -52,3 +53,4 @@
 .table-view .row-cell:hover {
     -fx-background-color: #dcdde1;
 }
+

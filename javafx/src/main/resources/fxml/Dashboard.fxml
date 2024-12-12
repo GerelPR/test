@@ -19,4 +19,12 @@
             <TableColumn text="Status" fx:id="statusColumn" />
         </columns>  
     </TableView>    
+    <Label text="Samples!" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    <TableView fx:id="sampleTableView">
+        <columns>
+            <TableColumn fx:id="sampleIdColumn" text="Sample ID"  prefWidth="200"/>
+            <TableColumn fx:id="sampleNameColumn" text="Sample Weight" prefWidth="200"/>
+            <TableColumn fx:id="sampleDescriptionColumn" text="Result" prefWidth="200"/>
+        </columns>
+    </TableView>
 </VBox>
