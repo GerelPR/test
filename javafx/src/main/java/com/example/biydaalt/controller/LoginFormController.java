@@ -24,6 +24,13 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * @author Unuu
+ * LoginFormController handles user login functionalities.
+ * It validates user input, manages authentication, and navigates users to the main screen or sign-up page.
+ * This controller interacts with UserRepository to retrieve and verify user credentials.
+ * Logs are implemented for security and debugging purposes.
+ */
 public class LoginFormController {
     private static final Logger LOGGER = Logger.getLogger(LoginFormController.class.getName());
     
@@ -33,26 +40,30 @@ public class LoginFormController {
     private static final int LOCKOUT_DURATION_MINUTES = 15;
 
     @FXML
-    private TextField usernameField;
+    private TextField usernameField; // Field for entering username
     
     @FXML
-    private PasswordField passwordField;
+    private PasswordField passwordField; // Field for entering password
     
     @FXML
-    private Label errorMessage;
+    private Label errorMessage; // Label to display error messages
     
     @FXML
-    private Button loginButton;
+    private Button loginButton; // Button to trigger login
+    
+    @FXML
+    private Button signupButton; // Button to navigate to the sign-up page
 
-    @FXML
-    private Button signupButton;
-
-    // Login attempt tracking
+    // Tracks login attempts and lockout timing
     private int failedAttempts = 0;
     private LocalDateTime lockoutEndTime = null;
 
     private UserRepository userRepository;
 
+    /**
+     * Constructor initializes the controller and connects to the database.
+     * It sets up the UserRepository for retrieving user data.
+     */
     public LoginFormController() {
         try {
             Connection connection = DatabaseConnection.connect();
@@ -64,60 +75,52 @@ public class LoginFormController {
         }
     }
 
+    /**
+     * Initializes the controller after the FXML file is loaded.
+     * Sets up button actions for login and sign-up functionalities.
+     */
     @FXML
     private void initialize() {
-        // Set up login button action
         loginButton.setOnAction(e -> handleLogin());
         signupButton.setOnAction(e -> redirectToSignup());
     }
 
+    /**
+     * Handles the login process by validating input, authenticating the user,
+     * and navigating to the main screen upon success.
+     */
     @FXML
     private void handleLogin() {
-        // Reset error message
-        errorMessage.setText("");
+        errorMessage.setText(""); // Reset error message
         errorMessage.setStyle("-fx-text-fill: red;");
 
-        // Input validation
-        String username = usernameField.getText().trim();
-        String password = passwordField.getText();
+        String username = usernameField.getText().trim(); // Get input username
+        String password = passwordField.getText(); // Get input password
 
-        // Check for empty fields
         if (username.isEmpty() || password.isEmpty()) {
             showError("Username and password cannot be empty");
             return;
         }
 
-        // Validate input format
         if (!isValidInput(username)) {
             showError("Invalid username format");
             return;
         }
 
-        // Check for active lockout
         if (isLockedOut()) {
-            long minutesRemaining = java.time.Duration.between(
-                LocalDateTime.now(), lockoutEndTime
-            ).toMinutes();
-            
-            showError("Too many failed attempts. Please try again in " + 
-                      minutesRemaining + " minutes.");
+            long minutesRemaining = java.time.Duration.between(LocalDateTime.now(), lockoutEndTime).toMinutes();
+            showError("Too many failed attempts. Please try again in " + minutesRemaining + " minutes.");
             return;
         }
 
-        // Attempt login
         try {
             boolean loginSuccessful = authenticateUser(username, password);
-
             if (loginSuccessful) {
-                // Fetch the current user's data from the database
                 User currentUser = userRepository.getUserByName(username);
                 if (currentUser != null) {
-                    String email = currentUser.getEmail();
-                    String role = currentUser.getRole();
-                    goToMainScreen(username, email, role);
+                    goToMainScreen(username, currentUser.getEmail(), currentUser.getRole());
                 }
             } else {
-                // Handle failed login attempt
                 handleFailedLogin();
             }
         } catch (Exception e) {
@@ -126,119 +129,101 @@ public class LoginFormController {
         }
     }
 
+    /**
+     * Redirects the user to the sign-up screen.
+     */
     @FXML
     private void redirectToSignup() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/signup.fxml"));
             Parent root = loader.load();
-    
-            // Get the current stage
             Stage stage = (Stage) usernameField.getScene().getWindow();
-    
-            // Update the root of the current scene
             stage.getScene().setRoot(root);
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to load sign-up screen", e);
             errorMessage.setText("Failed to transition to the sign-up screen.");
         }
     }
-    
-    
 
+    /**
+     * Validates the format of user input to ensure security and consistency.
+     * @param input The input string to validate.
+     * @return true if the input is valid, false otherwise.
+     */
     private boolean isValidInput(String input) {
-        return input != null && 
-               input.length() >= 3 && 
-               input.length() <= 50 && 
-               input.matches("^[a-zA-Z0-9_]+$");
+        return input != null && input.matches("^[a-zA-Z0-9_]+$");
     }
 
-    // Modify the authenticateUser method to handle password verification
+    /**
+     * Authenticates the user credentials by checking them against the database.
+     * @param username The username entered by the user.
+     * @param password The password entered by the user.
+     * @return true if authentication is successful; false otherwise.
+     */
     private boolean authenticateUser(String username, String password) {
         try {
             User user = userRepository.getUserByName(username);
-            
-            if (user != null) {
-                try {
-                    // Explicitly catch the IllegalArgumentException
-                    return BCrypt.checkpw(password, user.getPassword());
-                } catch (IllegalArgumentException e) {
-                    // Log the specific error
-                    LOGGER.log(Level.SEVERE, "BCrypt verification error for user: " + username, e);
-                    
-                    // Optional: Add additional logging to help diagnose the issue
-                    System.err.println("Stored password hash: " + user.getPassword());
-                    System.err.println("Hash length: " + user.getPassword().length());
-                    
-                    return false;
-                }
-            }
-            
-            return false;
+            return user != null && BCrypt.checkpw(password, user.getPassword());
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Authentication error", e);
             return false;
         }
     }
 
-    // Reset lockout method to allow login attempts after lockout period
+    /**
+     * Checks if the user is currently locked out due to multiple failed attempts.
+     * @return true if the user is locked out; false otherwise.
+     */
     private boolean isLockedOut() {
         if (lockoutEndTime == null) return false;
-        
-        // Check if lockout period has passed
         if (LocalDateTime.now().isAfter(lockoutEndTime)) {
-            // Reset lockout and failed attempts
             lockoutEndTime = null;
             failedAttempts = 0;
             return false;
         }
-        
         return true;
     }
 
+    /**
+     * Handles failed login attempts by incrementing the counter and applying lockout if necessary.
+     */
     private void handleFailedLogin() {
         failedAttempts++;
-        
         if (failedAttempts >= MAX_LOGIN_ATTEMPTS) {
-            // Set lockout time
             lockoutEndTime = LocalDateTime.now().plusMinutes(LOCKOUT_DURATION_MINUTES);
-            
-            // Log security event
             LOGGER.warning("Multiple failed login attempts. Account temporarily locked.");
         }
-        
         showError("Invalid username or password");
     }
 
+    /**
+     * Displays an error message to the user.
+     * @param message The error message to display.
+     */
     private void showError(String message) {
         errorMessage.setText(message);
         errorMessage.setStyle("-fx-text-fill: red;");
     }
 
+    /**
+     * Navigates the user to the main dashboard screen.
+     * @param username The username of the user.
+     * @param email The email of the user.
+     * @param role The role of the user.
+     */
     private void goToMainScreen(String username, String email, String role) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/HomeScreen.fxml"));
             Parent root = loader.load();
-    
-            // Get the controller of HomeScreen
             HomeScreenController homeScreenController = loader.getController();
-    
-            // Pass the current user's data to HomeScreenController
             homeScreenController.setUserData(username, email, role);
-    
-            // Get the current stage
             Stage stage = (Stage) usernameField.getScene().getWindow();
-    
-            // Update the root of the current scene
             stage.getScene().setRoot(root);
-    
-            // Ensure the stage remains maximized
             stage.setMaximized(true);
-    
-            // Update the title of the stage
             stage.setTitle("Lab Management");
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to load main screen", e);
             showError("Failed to load main screen");
         }
-    }       
+    }
 }
