@@ -163,7 +163,7 @@ public class HomeScreenController {
     }
 
     @FXML
-    private void logout() {
+    private void logoutUser() {
         try {
             // Load the login screen FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LoginForm.fxml"));
