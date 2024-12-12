@@ -91,20 +91,14 @@ public class LoginFormController {
      */
     @FXML
     private void handleLogin() {
-        lblErrorMessage.setText(""); // Reset error message
-        lblErrorMessage.setStyle("-fx-text-fill: red;");
+        resetErrorMessage(); // Resets the error message
+
 
         String username = usernameField.getText().trim(); // Get input username
         String password = passwordField.getText(); // Get input password
 
-        if (username.isEmpty() || password.isEmpty()) {
-            showError("Username and password cannot be empty");
-            return;
-        }
-
-        if (!isValidInput(username)) {
-            showError("Invalid username format");
-            return;
+        if (!validateInput(username, password)) {
+            return; // Validation failure stops execution
         }
 
         if (isLockedOut()) {
@@ -127,6 +121,25 @@ public class LoginFormController {
             LOGGER.log(Level.SEVERE, "Login process error", e);
             showError("An unexpected error occurred");
         }
+    }
+
+    private void resetErrorMessage() {
+        lblErrorMessage.setText("");
+        lblErrorMessage.setStyle("-fx-text-fill: red;");
+    }
+    
+    private boolean validateInput(String username, String password) {
+        if (username.isEmpty() || password.isEmpty()) {
+            showError("Username and password cannot be empty");
+            return false;
+        }
+    
+        if (!username.matches("^[a-zA-Z0-9_]+$")) {
+            showError("Invalid username format");
+            return false;
+        }
+    
+        return true;
     }
 
     /**
