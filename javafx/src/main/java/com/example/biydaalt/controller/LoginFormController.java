@@ -46,13 +46,13 @@ public class LoginFormController {
     private PasswordField passwordField; // Field for entering password
     
     @FXML
-    private Label errorMessage; // Label to display error messages
+    private Label lblErrorMessage; // Label to display error messages
     
     @FXML
-    private Button loginButton; // Button to trigger login
+    private Button btnLogin; // Button to trigger login
     
     @FXML
-    private Button signupButton; // Button to navigate to the sign-up page
+    private Button btnSignup; // Button to navigate to the sign-up page
 
     // Tracks login attempts and lockout timing
     private int failedAttempts = 0;
@@ -81,8 +81,8 @@ public class LoginFormController {
      */
     @FXML
     private void initialize() {
-        loginButton.setOnAction(e -> handleLogin());
-        signupButton.setOnAction(e -> redirectToSignup());
+        btnLogin.setOnAction(e -> handleLogin());
+        btnSignup.setOnAction(e -> redirectToSignup());
     }
 
     /**
@@ -91,8 +91,8 @@ public class LoginFormController {
      */
     @FXML
     private void handleLogin() {
-        errorMessage.setText(""); // Reset error message
-        errorMessage.setStyle("-fx-text-fill: red;");
+        lblErrorMessage.setText(""); // Reset error message
+        lblErrorMessage.setStyle("-fx-text-fill: red;");
 
         String username = usernameField.getText().trim(); // Get input username
         String password = passwordField.getText(); // Get input password
@@ -141,7 +141,7 @@ public class LoginFormController {
             stage.getScene().setRoot(root);
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to load sign-up screen", e);
-            errorMessage.setText("Failed to transition to the sign-up screen.");
+            lblErrorMessage.setText("Failed to transition to the sign-up screen.");
         }
     }
 
@@ -201,8 +201,8 @@ public class LoginFormController {
      * @param message The error message to display.
      */
     private void showError(String message) {
-        errorMessage.setText(message);
-        errorMessage.setStyle("-fx-text-fill: red;");
+        lblErrorMessage.setText(message);
+        lblErrorMessage.setStyle("-fx-text-fill: red;");
     }
 
     /**
