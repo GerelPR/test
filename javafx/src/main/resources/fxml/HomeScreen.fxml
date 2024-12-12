@@ -8,30 +8,13 @@
             fx:controller="com.example.biydaalt.controller.HomeScreenController" 
             prefWidth="1200" prefHeight="800" stylesheets="/com/example/css/homescreen-style.css">
 
-    <!-- Top Bar -->
-    <top>
-        <HBox spacing="10" alignment="CENTER_RIGHT" styleClass="topbar">
-            <Region HBox.hgrow="ALWAYS" /> <!-- Push items to the right -->
-
-            <!-- User Profile Section -->
-            <HBox spacing="10" alignment="CENTER">
-                <ImageView fx:id="profileImageView" fitWidth="40" fitHeight="40" 
-                           styleClass="profile-image" />
-                <VBox spacing="5" alignment="CENTER_RIGHT">
-                    <Label fx:id="usernameLabel" text="Username" styleClass="topbar-username" />
-                    <Label fx:id="userEmailLabel" text="user@example.com" styleClass="topbar-details" />
-                    <Label fx:id="userRoleLabel" text="Role" styleClass="topbar-details" />
-                </VBox>
-            </HBox>
-        </HBox>
-    </top>
-
     <!-- Main Content -->
     <center>
         <HBox spacing="0">
             <!-- Sidebar -->
             <VBox spacing="10" alignment="TOP_LEFT"
                   styleClass="sidebar"
+                  style="-fx-background-radius: 0 48 48 0;"
                   prefWidth="200">
                 <Label text="Lab" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;" />
 
@@ -54,6 +37,17 @@
             <StackPane fx:id="contentArea" style="-fx-padding: 20;" id="contentArea" HBox.hgrow="ALWAYS">
                 <!-- Default content will be loaded here -->
             </StackPane>
+
+            <!-- User Profile Section -->
+            <HBox spacing="10" alignment="TOP_CENTER">
+                <ImageView fx:id="profileImageView" fitWidth="40" fitHeight="40" 
+                            styleClass="profile-image" />
+                <VBox spacing="5" alignment="TOP_RIGHT">
+                    <Label fx:id="usernameLabel" text="Username" styleClass="topbar-username"/>
+                    <Label fx:id="userEmailLabel" text="user@example.com" styleClass="topbar-details" />
+                    <Label fx:id="userRoleLabel" text="Role" styleClass="topbar-details" />
+                </VBox>
+            </HBox>
         </HBox>
     </center>
 </BorderPane>

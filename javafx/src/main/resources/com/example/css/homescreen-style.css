@@ -1,6 +1,7 @@
 /* General styles */
 .root {
     -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: white;
 }
 
 /* Navigation buttons */
@@ -37,7 +38,6 @@
 /* Content area */
 #contentArea {
     -fx-background-color: #ffffff;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
 }
 
 #btnLogout {
@@ -47,13 +47,17 @@
 .sidebar{
     -fx-background-color: #5A57FF;
     -fx-padding: 20px;
+    -fx-magin-top: -100px;
+}
+
+.sidebar-pane {
+    -fx-border-radius: 30px;
 }
 
 /* Topbar styling */
 .topbar {
     -fx-background-color: white;
     -fx-padding: 10px 20px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
 }
 
 /* Profile image */
